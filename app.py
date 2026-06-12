@@ -1,28 +1,71 @@
 from flask import Flask, render_template, request
 import requests
 from datetime import datetime
+import google.generativeai as genai
 
 app = Flask(__name__)
 
+# =========================
+# Gemini Configuration
+# =========================
 
-def generate_summary(rain, sunny, cold):
+GEMINI_API_KEY = 
 
-    if rain >= 60:
-        return "High chance of rainfall. Carry an umbrella."
+genai.configure(api_key=GEMINI_API_KEY)
 
-    elif sunny >= 60:
-        return "Weather is likely to be sunny and suitable for outdoor activities."
+model = genai.GenerativeModel("gemini-2.5-flash")
 
-    elif cold >= 60:
-        return "Historically this date has been relatively cold. Consider warm clothing."
 
-    else:
-        return "Weather conditions appear mixed based on historical records."
+# =========================
+# AI Weather Summary
+# =========================
 
+def generate_summary(city, date, rain, sunny, cold):
+
+    prompt = f"""
+    You are a weather assistant.
+
+    City: {city}
+    Date: {date}
+
+    Weather probabilities:
+    Rain: {rain}%
+    Sunny: {sunny}%
+    Cold: {cold}%
+
+    Give:
+    - Weather summary
+    - Clothing advice
+    - Travel recommendation
+    - Outdoor activity suggestion
+
+    Keep it under 100 words.
+    """
+
+    try:
+
+        response = model.generate_content(prompt)
+
+        print("Gemini Response:", response.text)
+
+        return response.text
+
+    except Exception as e:
+
+        print("Gemini Error:", e)
+
+        return f"Gemini Error: {e}"
+
+# =========================
+# Get Coordinates
+# =========================
 
 def get_coordinates(city):
 
-    url = f"https://geocoding-api.open-meteo.com/v1/search?name={city}&count=1"
+    url = (
+        f"https://geocoding-api.open-meteo.com/v1/search?"
+        f"name={city}&count=1"
+    )
 
     response = requests.get(url).json()
 
@@ -35,6 +78,10 @@ def get_coordinates(city):
     )
 
 
+# =========================
+# Weather Analysis
+# =========================
+
 def get_weather_probabilities(city, target_date):
 
     coordinates = get_coordinates(city)
@@ -45,6 +92,7 @@ def get_weather_probabilities(city, target_date):
     latitude, longitude = coordinates
 
     target = datetime.strptime(target_date, "%Y-%m-%d")
+
     month_day = target.strftime("%m-%d")
 
     rainy_years = 0
@@ -72,6 +120,7 @@ def get_weather_probabilities(city, target_date):
         try:
 
             response = requests.get(url, timeout=10)
+
             data = response.json()
 
             if "daily" not in data:
@@ -91,6 +140,7 @@ def get_weather_probabilities(city, target_date):
                 cold_years += 1
 
         except Exception as e:
+
             print("API Error:", e)
 
     if years_checked == 0:
@@ -101,6 +151,8 @@ def get_weather_probabilities(city, target_date):
     cold_prob = round((cold_years / years_checked) * 100, 2)
 
     summary = generate_summary(
+        city,
+        target_date,
         rain_prob,
         sunny_prob,
         cold_prob
@@ -117,6 +169,10 @@ def get_weather_probabilities(city, target_date):
 
     return result
 
+
+# =========================
+# Home Page
+# =========================
 
 @app.route("/", methods=["GET", "POST"])
 def home():
@@ -140,6 +196,10 @@ def home():
         error=error
     )
 
+
+# =========================
+# Run App
+# =========================
 
 if __name__ == "__main__":
     app.run(debug=True)

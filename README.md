@@ -1,5 +1,11 @@
 # Weather Probability Predictor
 
+## Screenshot
+
+![Weather Predictor](screenshot.png)
+
+A Flask-based weather analysis application...
+
 A Flask-based weather analysis application that predicts:
 
 * Rain Probability

@@ -2,7 +2,7 @@
 
 ## Screenshot
 
-![Weather Predictor](screenshot.png)
+![Weather Predictor](Screenshot.png)
 
 A Flask-based weather analysis application...
 

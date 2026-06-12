@@ -1,36 +1,152 @@
+/* ===== Global Page ===== */
+
 body{
     font-family: Arial, sans-serif;
-    background:#f5f5f5;
+
+    background: linear-gradient(
+        rgba(0,0,0,0.35),
+        rgba(0,0,0,0.35)
+    ),
+    url("https://images.unsplash.com/photo-1504608524841-42fe6f032b4b");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    margin: 0;
+    padding: 0;
+
+    min-height: 100vh;
 }
+
+/* ===== Main Container ===== */
 
 .container{
-    width:600px;
-    margin:50px auto;
-    text-align:center;
+
+    width: 650px;
+
+    margin: 50px auto;
+
+    text-align: center;
+
+    background: rgba(255,255,255,0.15);
+
+    backdrop-filter: blur(12px);
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
 }
+
+/* ===== Title ===== */
 
 h1{
-    color:#1e88e5;
+
+    color: white;
+
+    margin-bottom: 25px;
+
+    font-size: 32px;
+
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
 }
+
+/* ===== Inputs ===== */
 
 input{
-    padding:10px;
-    margin:10px;
-    width:220px;
+
+    width: 250px;
+
+    padding: 12px;
+
+    margin: 10px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    outline: none;
+
+    font-size: 15px;
 }
+
+/* ===== Button ===== */
 
 button{
-    padding:10px 20px;
-    background:#1e88e5;
-    color:white;
-    border:none;
-    cursor:pointer;
+
+    padding: 12px 25px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #1e88e5;
+
+    color: white;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
 }
 
+button:hover{
+
+    background: #1565c0;
+
+    transform: scale(1.05);
+}
+
+/* ===== Result Card ===== */
+
 .card{
-    background:white;
-    padding:20px;
-    margin-top:30px;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
+
+    background: rgba(255,255,255,0.95);
+
+    margin-top: 30px;
+
+    padding: 25px;
+
+    border-radius: 15px;
+
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+
+    text-align: left;
+}
+
+/* ===== Result Text ===== */
+
+.card h2{
+
+    color: #1e88e5;
+}
+
+.card p{
+
+    font-size: 16px;
+
+    color: #333;
+
+    line-height: 1.7;
+}
+
+/* ===== Error Message ===== */
+
+.error{
+
+    color: #ff5252;
+
+    font-weight: bold;
+
+    margin-top: 20px;
+
+    background: rgba(255,255,255,0.8);
+
+    padding: 10px;
+
+    border-radius: 8px;
 }

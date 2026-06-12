@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Probability Predictor</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Weather Probability Predictor</h1>
+
+    <form method="POST">
+
+        <input
+            type="text"
+            name="city"
+            placeholder="Enter City"
+            required>
+
+        <input
+            type="date"
+            name="date"
+            required>
+
+        <button type="submit">
+            Analyze
+        </button>
+
+    </form>
+
+    {% if error %}
+        <h3>{{ error }}</h3>
+    {% endif %}
+
+    {% if result %}
+
+    <div class="card">
+
+        <h2>Prediction Result</h2>
+
+        <p>🌧 Rain Probability: {{ result.rain }}%</p>
+
+        <p>☀ Sunny Probability: {{ result.sunny }}%</p>
+
+        <p>❄ Cold Probability: {{ result.cold }}%</p>
+
+        <h3>AI Weather Summary</h3>
+
+        <p>{{ result.summary }}</p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
